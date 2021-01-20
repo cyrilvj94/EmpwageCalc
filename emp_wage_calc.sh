@@ -11,4 +11,13 @@ else
 	echo "Employee Absent"
 fi
 
-
+#Calculate daily employee wage
+wagePerHr=20
+fullDayHr=8
+if [ $attendance -eq $isPresent ]
+then
+	salary=$((wagePerHr*fullDayHr))
+else
+	salary=0
+fi
+echo "Salary for employee :" $salary 
