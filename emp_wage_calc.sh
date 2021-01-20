@@ -67,6 +67,11 @@ echo "Employee daily wage" $dailyWage
 count_hours=0
 max_count_hours=100
 day=1
+
+declare -a daily_wage_array
+declare -a cumulative_wage_array
+
+
 while [ $day -lt 32 -a $count_hours -le $max_count_hours ]
 do
 	echo day $day
@@ -90,11 +95,14 @@ do
 		daily_wage=$(empWage $attendance $partTime)
                 wage=$((wage+daily_wage))
 	fi
+	daily_wage_array[$((day-1))]=$daily_wage
+	cumulative_wage_array[$((day-1))]=$wage
 	echo  $count_hours $wage
 	day=$((day+1))
 done
 echo "Count of total hours in work" $count_hours
 echo "Total wage received " $wage
 
-
+echo  ${!daily_wage_array[@]}  "   :  " ${daily_wage_array[@]}
+echo  ${!cumulative_wage_array[@]} "  :   "   ${cumulative_wage_array[@]}
 
