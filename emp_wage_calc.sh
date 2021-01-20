@@ -67,15 +67,9 @@ echo "Employee daily wage" $dailyWage
 count_hours=0
 max_count_hours=100
 day=1
-while [ $day -lt 32 ]
+while [ $day -lt 32 -a $count_hours -le $max_count_hours ]
 do
 	echo day $day
-	if [ $count_hours -eq  $max_count_hours ]
-	then
-		echo Limit reached $count_days $count_hours
-		break
-	fi
-
 	attendance=$(checkAttendance)
 	partTime=$(checkParttime)
 	if [ $attendance -eq 0 ]
@@ -99,7 +93,8 @@ do
 	echo  $count_hours $wage
 	day=$((day+1))
 done
-
+echo "Count of total hours in work" $count_hours
+echo "Total wage received " $wage
 
 
 
