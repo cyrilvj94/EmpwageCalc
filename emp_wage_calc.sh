@@ -1,5 +1,5 @@
 #! /bin/bash 
-echo "Welcome to Employee wage computation program"
+printf "Welcome to Employee wage computation program \n "
 
 #Check employee is present or absent
 function checkAttendance
@@ -41,14 +41,26 @@ case $attendance in
 esac
 echo $salary
 }
+#Calculate Monthly wage
+function monthlyWage
+{
+dailyWage=$1
+echo $((dailyWage*20))
+}
 #Main program
-attendance=$(checkAttendance);partTime=$(checkParttime)
+attendance=$(checkAttendance)
+#partTime=$(checkParttime)
+read -p"Is part time employee" partTime
 case $attendance in
-	0)echo Employee absent;;
-	1)echo Employee Present;;
+	0)printf "Employee absent \n";;
+	1)printf "Employee Present \n";;
 esac
 case $partTime in
-	0)echo "Full time employee";;
-	1)echo  "Part time employee"
-esac
-echo "Employee wage": $(empWage $attendance $partTime)
+	0)printf "Full time employee \n";;
+	1)printf "Part time employee \n"
+esac 
+dailyWage=$(empWage $attendance $partTime)
+echo "Employee daily wage" $dailyWage
+monthlyWage=$(monthlyWage $dailyWage)
+echo "Monthly wage" $monthlyWage
+
