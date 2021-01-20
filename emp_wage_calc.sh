@@ -47,10 +47,11 @@ function monthlyWage
 dailyWage=$1
 echo $((dailyWage*20))
 }
+
 #Main program
-attendance=$(checkAttendance)
+#attendance=$(checkAttendance)
 #partTime=$(checkParttime)
-read -p"Is part time employee" partTime
+#read -p"Is part time employee" partTime
 case $attendance in
 	0)printf "Employee absent \n";;
 	1)printf "Employee Present \n";;
@@ -59,8 +60,46 @@ case $partTime in
 	0)printf "Full time employee \n";;
 	1)printf "Part time employee \n"
 esac 
+
 dailyWage=$(empWage $attendance $partTime)
 echo "Employee daily wage" $dailyWage
-monthlyWage=$(monthlyWage $dailyWage)
-echo "Monthly wage" $monthlyWage
+
+count_hours=0
+max_count_hours=100
+day=1
+while [ $day -lt 32 ]
+do
+	echo day $day
+	if [ $count_hours -eq  $max_count_hours ]
+	then
+		echo Limit reached $count_days $count_hours
+		break
+	fi
+
+	attendance=$(checkAttendance)
+	partTime=$(checkParttime)
+	if [ $attendance -eq 0 ]
+	then
+		echo "Employee Absent"
+	else
+		echo "Employee Present"
+		if [ $partTime -eq 0 ]
+        	then
+                	echo "full day employee"
+                	count_hours=$((count_hours+8))
+			daily_wage=$(empWage $attendance $partTime)
+			wage=$((wage+daily_wage))
+        	else
+                echo "part day employee"
+                count_hours=$((count_hours+4))
+        	fi
+		daily_wage=$(empWage $attendance $partTime)
+                wage=$((wage+daily_wage))
+	fi
+	echo  $count_hours $wage
+	day=$((day+1))
+done
+
+
+
 
